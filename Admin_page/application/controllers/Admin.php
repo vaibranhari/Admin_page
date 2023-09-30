@@ -39,5 +39,41 @@ public function logout() {
     redirect('Adminlogin');
     }
 
+    
+    public function blockUser($userId) {
+        $data = array(
+            'status' => 'blocked' );
+
+        $this->db->where('id', $userId);
+        $result = $this->db->update('consumers', $data);
+
+        if ($result) {
+            $this->session->set_flashdata('success_message', 'User blocked successfully.');
+        } else {
+            $this->session->set_flashdata('error_message', 'Unable to block user.');
+        }
+        redirect('Admin/adminpag');
+    }
+
+    public function unblockUser($userId) {
+        $data = array(
+            'status' => 'active',
+        );
+
+        $this->db->where('id', $userId); 
+        $result = $this->db->update('consumers', $data);
+
+        if ($result) {
+            $this->session->set_flashdata('success_message', 'User unblocked successfully.');
+        } else {
+            $this->session->set_flashdata('error_message', 'Unable to unblock user.');
+        }
+        redirect('Admin/adminpag');
+    }
+
 }
             
+
+
+
+
